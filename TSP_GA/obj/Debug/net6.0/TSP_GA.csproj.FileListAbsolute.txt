@@ -1,0 +1,15 @@
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\bin\Debug\net6.0\TSP_GA.exe
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\bin\Debug\net6.0\TSP_GA.deps.json
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\bin\Debug\net6.0\TSP_GA.runtimeconfig.json
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\bin\Debug\net6.0\TSP_GA.dll
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\bin\Debug\net6.0\TSP_GA.pdb
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\obj\Debug\net6.0\TSP_GA.csproj.AssemblyReference.cache
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\obj\Debug\net6.0\TSP_GA.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\obj\Debug\net6.0\TSP_GA.AssemblyInfoInputs.cache
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\obj\Debug\net6.0\TSP_GA.AssemblyInfo.cs
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\obj\Debug\net6.0\TSP_GA.csproj.CoreCompileInputs.cache
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\obj\Debug\net6.0\TSP_GA.dll
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\obj\Debug\net6.0\refint\TSP_GA.dll
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\obj\Debug\net6.0\TSP_GA.pdb
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\obj\Debug\net6.0\TSP_GA.genruntimeconfig.cache
+C:\Users\JUKI\source\repos\TSP_GA\TSP_GA\obj\Debug\net6.0\ref\TSP_GA.dll
