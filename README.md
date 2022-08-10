@@ -30,16 +30,16 @@ Let's start with a method whose performance is independent from other methods.
 ### Shuffle()
 
 ```cs
-private List<T> Shuffle<T>(List<T> list) {
-    List<T> temp = new List<T>(list); // c1 | 1
-    Random random = new Random(); // c2 | 1
-    int n = temp.Count; // c3 | 1
-    while (n > 1) { // c4 | n + 1
-        n--; // c5 | n
-        int k = random.Next(n + 1); // c6 | n
-        (temp[n], temp[k]) = (temp[k], temp[n]); // c7 | n
+public static List<T> Shuffle<T>(this List<T> list) {
+    List<T> temp = new(list);                     // c1 | 1
+    Random random = new();                        // c2 | 1
+    int n = temp.Count;                           // c3 | 1
+    while (n > 1) {                               // c4 | n + 1
+        n--;                                      // c5 | n
+        int k = random.Next(n + 1);               // c6 | n
+        (temp[n], temp[k]) = (temp[k], temp[n]);  // c7 | n
     }
-    return temp; // c8 | 1
+    return temp;                                  // c8 | 1
 }
 ```
 
@@ -52,15 +52,16 @@ private List<T> Shuffle<T>(List<T> list) {
 ### GetRandomPopulation()
 
 ```cs
-private Population GetRandomPopulation(List < Population > generation) {
-    double random = new Random().NextDouble(); // c1 | 1
-    int index = 0; // c2 | 1
-    Population currPopulation = generation[0]; // c3 | 1
-    while (currPopulation.NormalizedFitness > 1 - random) { // c4 | n + 1
-        random -= currPopulation.NormalizedFitness; // c5 | n
-        currPopulation = generation[++index]; // c6 | n
+public Population GetRandomPopulation() {
+    List<Population> sortedPopulations = Populations.OrderBy(x => x.Fitness).ToList();  // c1 | P^2
+    double random = new Random().NextDouble();                                          // c2 | 1
+    int index = 0;                                                                      // c3 | 1
+    Population currPopulation = sortedPopulations[0];                                   // c4 | 1
+    while (currPopulation.NormalizedFitness > 1 - random) {                             // c5 | P + 1
+        random -= currPopulation.NormalizedFitness;                                     // c6 | P
+        currPopulation = sortedPopulations[++index];                                    // c7 | P
     }
-    return currPopulation; // c7 | 1
+    return currPopulation;                                                              // c8 | 1
 }
 ```
 
