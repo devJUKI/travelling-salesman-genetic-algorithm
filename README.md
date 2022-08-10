@@ -86,7 +86,86 @@ public Population GetRandomPopulation() {
 It's time complexity would be:
 > T(P) = P^2 + 1 + 1 + 1 + P + P + P + 1 = P^2 + 3P = P^2 = O(P^2)
 
-### 
+### Crossover()
+
+```cs
+private Population Crossover(Population A, Population B) {
+    List<List<int>> orders = new();                                 // c1  | 1 
+    Random random = new();                                          // c2  | 1
+
+    for (int k = 0; k < A.Paths.Count; k++) {                       // c3  | T + 1
+        int start = random.Next(0, A.Paths[k].Count);               // c4  | T
+        int end = random.Next(start + 1, B.Paths[k].Count);         // c5  | T
+        List<int> order = A.Paths[k].GetRange(start, end - start);  // c6  | T
+
+        int left = Program.Places.Count - order.Count;              // c7  | T
+        for (int i = 0; i < left; i++) {                            // c8  | T * (L + 1)
+            for (int j = 0; j < B.Paths[k].Count; j++) {            // c9  | TL * (L + 1)
+                if (!order.Contains(B.Paths[k][j])) {               // c10 | T * L^2
+                    order.Add(B.Paths[k][j]);                       // c11 | T * L^2
+                }
+            }
+        }
+
+        // Make sure 0 is always the first element
+        order.Remove(0);                                            // c12 | T
+        order.Insert(0, 0);                                         // c13 | T
+        orders.Add(order);                                          // c14 | T
+    }
+
+    return new Population(orders);                                  // c15 | 1 * TL
+}
+```
+
+### Population constructor()
+
+```cs
+        public Population(List<List<int>> paths) {
+            Paths = paths;          // c1 | 1
+            Fitness = GetFitness(); // c2 | TL
+            Price = GetPrice();     // c3 | TL
+        }
+```
+
+```cs
+        private double GetDistance(List<int> order) {
+            double distance = 0;                                                // c1 | 1
+            for (int i = 0; i < order.Count - 1; i++) {                         // c2 | L + 1
+                Location place1 = Program.Places[order[i]];                     // c3 | L
+                Location place2 = Program.Places[order[i + 1]];                 // c4 | L
+                // Convert to km
+                double xDiff = (place1.X - place2.X) / 1000;                    // c5 | L
+                double yDiff = (place1.Y - place2.Y) / 1000;                    // c6 | L
+                distance += Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2)); // c7 | L
+            }
+            return distance;                                                    // c8 | 1
+        }
+```
+
+```cs
+        private double GetFitness() {
+            List<double> times = new();                                     // c1 | 1
+            // 1 km = 1 min
+            Paths.ForEach(order => times.Add(GetDistance(order)));          // c2 | T * L
+            // Adding rest times
+            for (int i = 0; i < times.Count; i++) {                         // c3 | T + 1
+                int timeInPlaces = Paths[i].Count * 60;                     // c4 | T
+                int restTimes = (int)Math.Floor(times[i] / 16);             // c5 | T
+                times[i] = times[i] + restTimes * 8 * 60 + timeInPlaces;    // c6 | T
+            }
+            return times.Max();                                             // c7 | T
+        }
+```
+
+```cs
+        private double GetPrice() {
+            List<double> distances = new();                             // c1 | 1
+            Paths.ForEach(order => distances.Add(GetDistance(order)));  // c2 | T * L
+            double price = 0;                                           // c3 | 1
+            distances.ForEach(d => price += Math.Sqrt(d));              // c4 | T
+            return price;                                               // c5 | 1
+        }
+```
 
 ### Shuffle()
 
