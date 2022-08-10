@@ -10,7 +10,7 @@ Travelling salesman problem using genetic algorithm
 
 ## Time complexity
 
-> P stands for population count, T for traveller count and L for location count.
+**P stands for population count, T for traveller count and L for location count**
 
 Genetic algorithm starts from this method
 
@@ -124,6 +124,15 @@ private Population Crossover(Population A, Population B) {
 ### Population constructor()
 
 ```cs
+public Population(List<List<int>> paths) {
+    Paths = paths;          // c1 | 1
+    Fitness = GetFitness(); // c2 | TL
+    Price = GetPrice();     // c3 | TL
+}
+```
+> T(T, L) = 1 + TL + TL = 2TL = O(TL)
+
+```cs
 private double GetDistance(List<int> order) {
     double distance = 0;                                                // c1 | 1
     for (int i = 0; i < order.Count - 1; i++) {                         // c2 | L + 1
@@ -166,15 +175,6 @@ private double GetPrice() {
 ```
 > T(T, L) = 1 + TL + 1 + T + 1 = TL + T = TL = O(TL)
 
-```cs
-public Population(List<List<int>> paths) {
-    Paths = paths;          // c1 | 1
-    Fitness = GetFitness(); // c2 | TL
-    Price = GetPrice();     // c3 | TL
-}
-```
-> T(T, L) = 1 + TL + TL = 2TL = O(TL)
-
 ### Mutate()
 
 ```cs
@@ -194,6 +194,37 @@ private Population Mutate(Population population) {
 
 There most likely will be more locations than travellers, hence O(TL) and not O(T^2).
 
+## NormalizeFitnesses
+
+Now we can move onto the next main method - <i>NormalizeFitnesses</i>
+
+```cs
+    public void NormalizeFitnesses() {
+    double sum = 0;                                 // c1 | 1
+    Populations.ForEach(gen => sum += gen.Fitness); // c2 | P
+    for (int i = 0; i < Populations.Count; i++) {   // c3 | P + 1
+        Populations[i].SetNormalizeFitness(sum);    // c4 | P
+    }
+}
+```
+> T(P) = 1 + P + (P + 1) + P = 3P = P = O(P)
+
+## CheckBestPopulation
+
+And this is the last method we need to calculate time complexity for. Then we will be able to find whole algorithm's time complexity.
+
+```cs
+private void CheckBestPopulation(Generation generation) {
+    bestGenPopulation = generation.GetBestPopulation(); // c1 | P
+
+    if (bestGenPopulation < bestPopulation!) {          // c2 | 1
+        bestPopulation = bestGenPopulation;             // c3 | 1
+        OnBestSolutionChanged?.Invoke(bestPopulation);
+    }
+}
+```
+> T(P) = P + 1 + 1 = P = O(P)
+
 ### Shuffle()
 
 ```cs
@@ -209,49 +240,3 @@ public static List<T> Shuffle<T>(this List<T> list) {
     return temp;                                  // c8 | 1
 }
 ```
-
-<i>Shuffle()</i> time complexity is:
-
-<p align="center">
-  <img src="https://github.com/devJUKI/TSP_GA/blob/main/img2.png" alt="drawing" width="450"/>
-</p>
-
-### NormalizeFitness()
-
-```cs
-private void NormalizeFitness(List < Population > generation) {
-    double sum = 0; // c1 | 1
-    generation.ForEach(gen => sum += gen.Fitness); // c2 | 1
-    for (int i = 0; i < generation.Count; i++) { // c3 | n + 1
-        generation[i].SetNormalizeFitness(sum); // c4 | n
-    }
-}
-```
-
-<i>NormalizeFitness()</i> time complexity is:
-
-<p align="center">
-  <img src="https://github.com/devJUKI/TSP_GA/blob/main/img4.png" alt="drawing" width="450"/>
-</p>
-
-### Mutate()
-
-```cs
-private Population Mutate(Population population) {
-    List < List < int >> orders = new List < List < int >> (); // c1 | 1
-    for (int i = 0; i < population.Orders.Count; i++) { // c2 | n + 1
-        List < int > shuffledOrder = Shuffle(population.Orders[i]); // c3 | n
-        // Make sure 0 is always the first element
-        shuffledOrder.Remove(0); // c4 | n
-        shuffledOrder.Insert(0, 0); // c5 | n
-        orders.Add(shuffledOrder); // c6 | n
-    }
-    return new Population(orders); // c7 | 1
-}
-```
-
-<i>Mutate()</i> time complexity is:
-
-<p align="center">
-  <img src="https://github.com/devJUKI/TSP_GA/blob/main/img5.png" alt="drawing" width="450"/>
-</p>
