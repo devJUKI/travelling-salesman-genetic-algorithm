@@ -64,6 +64,7 @@ private Generation GetNextGeneration(Generation currGeneration) {
     return nextGen;                                                 // c8 | 1
 }
 ```
+> T(P, T, L) = 1 + (1 * P^2) + (1 * P^2) + (P + 1) + (P * T * L^2) + (P * TL) + P + 1 = (2 * P^2)
 
 We can see which methods need their time complexities to be calculated, so let's get started.
 
@@ -121,71 +122,71 @@ private Population Crossover(Population A, Population B) {
 ### Population constructor()
 
 ```cs
-        private double GetDistance(List<int> order) {
-            double distance = 0;                                                // c1 | 1
-            for (int i = 0; i < order.Count - 1; i++) {                         // c2 | L + 1
-                Location place1 = Program.Places[order[i]];                     // c3 | L
-                Location place2 = Program.Places[order[i + 1]];                 // c4 | L
-                // Convert to km
-                double xDiff = (place1.X - place2.X) / 1000;                    // c5 | L
-                double yDiff = (place1.Y - place2.Y) / 1000;                    // c6 | L
-                distance += Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2)); // c7 | L
-            }
-            return distance;                                                    // c8 | 1
-        }
+private double GetDistance(List<int> order) {
+    double distance = 0;                                                // c1 | 1
+    for (int i = 0; i < order.Count - 1; i++) {                         // c2 | L + 1
+        Location place1 = Program.Places[order[i]];                     // c3 | L
+        Location place2 = Program.Places[order[i + 1]];                 // c4 | L
+        // Convert to km
+        double xDiff = (place1.X - place2.X) / 1000;                    // c5 | L
+        double yDiff = (place1.Y - place2.Y) / 1000;                    // c6 | L
+        distance += Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2)); // c7 | L
+    }
+    return distance;                                                    // c8 | 1
+}
 ```
 > T(L) = 1 + (L + 1) + L + L + L + L + L + 1 = 6L = L = O(L)
 
 ```cs
-        private double GetFitness() {
-            List<double> times = new();                                     // c1 | 1
-            // 1 km = 1 min
-            Paths.ForEach(order => times.Add(GetDistance(order)));          // c2 | T * L
-            // Adding rest times
-            for (int i = 0; i < times.Count; i++) {                         // c3 | T + 1
-                int timeInPlaces = Paths[i].Count * 60;                     // c4 | T
-                int restTimes = (int)Math.Floor(times[i] / 16);             // c5 | T
-                times[i] = times[i] + restTimes * 8 * 60 + timeInPlaces;    // c6 | T
-            }
-            return times.Max();                                             // c7 | T
-        }
+private double GetFitness() {
+    List<double> times = new();                                     // c1 | 1
+    // 1 km = 1 min
+    Paths.ForEach(order => times.Add(GetDistance(order)));          // c2 | T * L
+    // Adding rest times
+    for (int i = 0; i < times.Count; i++) {                         // c3 | T + 1
+        int timeInPlaces = Paths[i].Count * 60;                     // c4 | T
+        int restTimes = (int)Math.Floor(times[i] / 16);             // c5 | T
+        times[i] = times[i] + restTimes * 8 * 60 + timeInPlaces;    // c6 | T
+    }
+    return times.Max();                                             // c7 | T
+}
 ```
 > T(T, L) = 1 + TL + (T + 1) + T + T + T + T = TL + 5T = TL = O(TL)
 
 ```cs
-        private double GetPrice() {
-            List<double> distances = new();                             // c1 | 1
-            Paths.ForEach(order => distances.Add(GetDistance(order)));  // c2 | T * L
-            double price = 0;                                           // c3 | 1
-            distances.ForEach(d => price += Math.Sqrt(d));              // c4 | T
-            return price;                                               // c5 | 1
-        }
+private double GetPrice() {
+    List<double> distances = new();                             // c1 | 1
+    Paths.ForEach(order => distances.Add(GetDistance(order)));  // c2 | T * L
+    double price = 0;                                           // c3 | 1
+    distances.ForEach(d => price += Math.Sqrt(d));              // c4 | T
+    return price;                                               // c5 | 1
+}
 ```
 > T(T, L) = 1 + TL + 1 + T + 1 = TL + T = TL = O(TL)
 
 ```cs
-        public Population(List<List<int>> paths) {
-            Paths = paths;          // c1 | 1
-            Fitness = GetFitness(); // c2 | TL
-            Price = GetPrice();     // c3 | TL
-        }
+public Population(List<List<int>> paths) {
+    Paths = paths;          // c1 | 1
+    Fitness = GetFitness(); // c2 | TL
+    Price = GetPrice();     // c3 | TL
+}
 ```
 > T(T, L) = 1 + TL + TL = 2TL = O(TL)
 
 ### Mutate()
 
 ```cs
-        private Population Mutate(Population population) {
-            List<List<int>> orders = new();                                 // c1 | 1
-            for (int i = 0; i < population.Paths.Count; i++) {              // c2 | T + 1
-                List<int> shuffledOrder = population.Paths[i].Shuffle();    // c3 | T * T
-                // Make sure 0 is always the first element
-                shuffledOrder.Remove(0);                                    // c4 | T
-                shuffledOrder.Insert(0, 0);                                 // c5 | T
-                orders.Add(shuffledOrder);                                  // c6 | T
-            }
-            return new Population(orders);                                  // c7 | TL
-        }
+private Population Mutate(Population population) {
+    List<List<int>> orders = new();                                 // c1 | 1
+    for (int i = 0; i < population.Paths.Count; i++) {              // c2 | T + 1
+        List<int> shuffledOrder = population.Paths[i].Shuffle();    // c3 | T * T
+        // Make sure 0 is always the first element
+        shuffledOrder.Remove(0);                                    // c4 | T
+        shuffledOrder.Insert(0, 0);                                 // c5 | T
+        orders.Add(shuffledOrder);                                  // c6 | T
+    }
+    return new Population(orders);                                  // c7 | TL
+}
 ```
 > T(T, L) = 1 + (T + 1) + T^2 + T + T + T + TL = 4T + T^2 + TL = TL = O(TL)
 
