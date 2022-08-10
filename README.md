@@ -48,7 +48,11 @@ private void ExecuteStep(Generation generation, int index) {
 }
 ```
 
-<i>ExecuteStep</i> method consists of 3 main methods - <i>GetNextGeneration</i>, <i>NormalizeFitnesses</i> and <i>CheckBestPopulation</i>. We will start from the smallest, independent methods and work our way up to the main methods to calculate their time complexities.
+<i>ExecuteStep</i> method consists of 3 main methods - <i>GetNextGeneration</i>, <i>NormalizeFitnesses</i> and <i>CheckBestPopulation</i>. We have to start from the smallest, independent methods and work our way up to the main methods to calculate their time complexities.
+
+I will instantly show the calculations for time complexities, but I will provide code and calculations of the independent methods below, so you can see where I got everything from.
+
+> T(P, T, L) = (P * T * L^2) + P + P = P * T * L^2 = O(P * T * L^2)
 
 ## GetNextGeneration()
 
