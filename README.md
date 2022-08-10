@@ -121,14 +121,6 @@ private Population Crossover(Population A, Population B) {
 ### Population constructor()
 
 ```cs
-        public Population(List<List<int>> paths) {
-            Paths = paths;          // c1 | 1
-            Fitness = GetFitness(); // c2 | TL
-            Price = GetPrice();     // c3 | TL
-        }
-```
-
-```cs
         private double GetDistance(List<int> order) {
             double distance = 0;                                                // c1 | 1
             for (int i = 0; i < order.Count - 1; i++) {                         // c2 | L + 1
@@ -142,6 +134,7 @@ private Population Crossover(Population A, Population B) {
             return distance;                                                    // c8 | 1
         }
 ```
+> T(L) = 1 + (L + 1) + L + L + L + L + L + 1 = 6L = L = O(L)
 
 ```cs
         private double GetFitness() {
@@ -157,6 +150,7 @@ private Population Crossover(Population A, Population B) {
             return times.Max();                                             // c7 | T
         }
 ```
+> T(T, L) = 1 + TL + (T + 1) + T + T + T + T = TL + 5T = TL = O(TL)
 
 ```cs
         private double GetPrice() {
@@ -167,6 +161,16 @@ private Population Crossover(Population A, Population B) {
             return price;                                               // c5 | 1
         }
 ```
+> T(T, L) = 1 + TL + 1 + T + 1 = TL + T = TL = O(TL)
+
+```cs
+        public Population(List<List<int>> paths) {
+            Paths = paths;          // c1 | 1
+            Fitness = GetFitness(); // c2 | TL
+            Price = GetPrice();     // c3 | TL
+        }
+```
+> T(T, L) = 1 + TL + TL = 2TL = O(TL)
 
 ### Shuffle()
 
@@ -228,41 +232,4 @@ private Population Mutate(Population population) {
 
 <p align="center">
   <img src="https://github.com/devJUKI/TSP_GA/blob/main/img5.png" alt="drawing" width="450"/>
-</p>
-
-### Crossover()
-
-```cs
-private Population Crossover(Population A, Population B) {
-    List<List<int>> orders = new();                                 // c1  | 1 
-    Random random = new();                                          // c2  | 1
-
-    for (int k = 0; k < A.Paths.Count; k++) {                       // c3  | T + 1
-        int start = random.Next(0, A.Paths[k].Count);               // c4  | T
-        int end = random.Next(start + 1, B.Paths[k].Count);         // c5  | T
-        List<int> order = A.Paths[k].GetRange(start, end - start);  // c6  | T
-
-        int left = Program.Places.Count - order.Count;              // c7  | T
-        for (int i = 0; i < left; i++) {                            // c8  | T * (L + 1)
-            for (int j = 0; j < B.Paths[k].Count; j++) {            // c9  | TL * (L + 1)
-                if (!order.Contains(B.Paths[k][j])) {               // c10 | T * L^2
-                    order.Add(B.Paths[k][j]);                       // c11 | T * L^2
-                }
-            }
-        }
-
-        // Make sure 0 is always the first element
-        order.Remove(0);                                            // c12 | T
-        order.Insert(0, 0);                                         // c13 | T
-        orders.Add(order);                                          // c14 | T
-    }
-
-    return new Population(orders);                                  // c15 | 1 * TL
-}
-```
-
-<i>Crossover()</i> time complexity is:
-
-<p align="center">
-  <img src="https://github.com/devJUKI/TSP_GA/blob/main/img6.png" alt="drawing" width="450"/>
 </p>
