@@ -43,6 +43,8 @@ I will instantly show the calculations for time complexities, but I will provide
 
 > T(G, P, T, L) = 1 + (G + 1) + (G * (P * T * L^2)) = G + (G * (P * T * L^2)) = G * P * T * L^2 = O(G * P * T * L^2)
 
+Algorithm's time complexity is O(G * P * T * L^2).
+
 ### ExecuteStep()
 
 ```cs
