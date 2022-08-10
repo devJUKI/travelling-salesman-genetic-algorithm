@@ -10,6 +10,8 @@ Travelling salesman problem using genetic algorithm
 
 ## Time complexity
 
+> P stands for population count, T for traveller count and L for location count.
+
 Genetic algorithm starts from this method
 
 ```cs
