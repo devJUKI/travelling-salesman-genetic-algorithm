@@ -225,7 +225,7 @@ private void CheckBestPopulation(Generation generation) {
 ```
 > T(P) = P + 1 + 1 = P = O(P)
 
-### Shuffle()
+## Shuffle list extension
 
 ```cs
 public static List<T> Shuffle<T>(this List<T> list) {
@@ -240,3 +240,4 @@ public static List<T> Shuffle<T>(this List<T> list) {
     return temp;                                  // c8 | 1
 }
 ```
+> T(n) = 1 + 1 + 1 + (n + 1) + n + n + n + 1 = 4n = n = O(n)
