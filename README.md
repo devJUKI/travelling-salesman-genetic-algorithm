@@ -172,6 +172,25 @@ private Population Crossover(Population A, Population B) {
 ```
 > T(T, L) = 1 + TL + TL = 2TL = O(TL)
 
+### Mutate()
+
+```cs
+        private Population Mutate(Population population) {
+            List<List<int>> orders = new();                                 // c1 | 1
+            for (int i = 0; i < population.Paths.Count; i++) {              // c2 | T + 1
+                List<int> shuffledOrder = population.Paths[i].Shuffle();    // c3 | T * T
+                // Make sure 0 is always the first element
+                shuffledOrder.Remove(0);                                    // c4 | T
+                shuffledOrder.Insert(0, 0);                                 // c5 | T
+                orders.Add(shuffledOrder);                                  // c6 | T
+            }
+            return new Population(orders);                                  // c7 | TL
+        }
+```
+> T(T, L) = 1 + (T + 1) + T^2 + T + T + T + TL = 4T + T^2 + TL = TL = O(TL)
+
+There most likely will be more locations than travellers, hence O(TL) and not O(T^2).
+
 ### Shuffle()
 
 ```cs
