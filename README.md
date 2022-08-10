@@ -10,19 +10,23 @@ Travelling salesman problem using genetic algorithm
 
 ## Time complexity
 
-**P stands for population count, T for traveller count and L for location count**
+**What each letter means:**
+- P - Population count
+- T - Traveller count
+- L - Location count
+- G - Generation count
 
 Genetic algorithm starts from this method
 
 ```cs
 public void Start() {
-    if (singleThread) {
-        for (int i = 1; i <= generationCount; i++) {    
-            ExecuteStep(currGeneration, i);             
+    if (singleThread) {                               // c1 | 1
+        for (int i = 1; i <= generationCount; i++) {  // c2 | G + 1    
+            ExecuteStep(currGeneration, i);           // c3 | G * (P * T * L^2)
         }
     } else {
-        Parallel.For(1, generationCount, (i) => {
-            ExecuteStep(currGeneration, i);
+        Parallel.For(1, generationCount, (i) => {     // c2 | G + 1   
+            ExecuteStep(currGeneration, i);           // c3 | G * (P * T * L^2)
         });
     }
 
@@ -32,6 +36,10 @@ public void Start() {
 
 But to calculate the complexity of this method, we first need to calculate the complexity of the methods that it calls.
 Let's dive into <i>ExecuteStep</i> method.
+
+I will instantly show the calculations for time complexities, but I will provide code and calculations of the independent methods below, so you can see where I got everything from.
+
+> T(G, P, T, L) = 1 + (G + 1) + (G * (P * T * L^2)) = G + (G * (P * T * L^2)) = G * P * T * L^2 = O(G * P * T * L^2)
 
 ### ExecuteStep()
 
@@ -49,8 +57,6 @@ private void ExecuteStep(Generation generation, int index) {
 ```
 
 <i>ExecuteStep</i> method consists of 3 main methods - <i>GetNextGeneration</i>, <i>NormalizeFitnesses</i> and <i>CheckBestPopulation</i>. We have to start from the smallest, independent methods and work our way up to the main methods to calculate their time complexities.
-
-I will instantly show the calculations for time complexities, but I will provide code and calculations of the independent methods below, so you can see where I got everything from.
 
 > T(P, T, L) = (P * T * L^2) + P + P = P * T * L^2 = O(P * T * L^2)
 
