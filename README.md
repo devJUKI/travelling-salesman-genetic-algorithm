@@ -2,6 +2,8 @@
 
 Travelling salesman problem using genetic algorithm
 
+---
+
 ## Algorithm flowchart
 
 <p align="center">
