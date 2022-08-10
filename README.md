@@ -30,8 +30,8 @@ Let's start with a method whose performance is independent from other methods.
 ### Shuffle()
 
 ```cs
-private List < T > Shuffle < T > (List < T > list) {
-    List < T > temp = new List < T > (list); // c1 | 1
+private List<T> Shuffle<T> (List<T> list) {
+    List<T> temp = new List<T>(list); // c1 | 1
     Random random = new Random(); // c2 | 1
     int n = temp.Count; // c3 | 1
     while (n > 1) { // c4 | n + 1
@@ -44,6 +44,3 @@ private List < T > Shuffle < T > (List < T > list) {
 ```
 
 <i>Shuffle()</i> time complexity is:
-𝑇(𝑛) = 𝑐1 + 𝑐2 + 𝑐3 + 𝑐4
-(𝑛 + 1) + 𝑐5𝑛 + 𝑐6𝑛 + 𝑐7𝑛 + 𝑐8
-𝑇(𝑛) = 𝑛 + 𝑛 + 𝑛 + 𝑛 = 4𝑛 = 𝑂(𝑛)
