@@ -116,6 +116,7 @@ private Population Crossover(Population A, Population B) {
     return new Population(orders);                                  // c15 | 1 * TL
 }
 ```
+> T(T, L) = 1 + 1 + (T + 1) + T + T + T + T + (T * (L + 1)) + (TL * (L + 1)) + (T * L^2) + (T * L^2) + T + T + T + TL = 8T + 2TL + 3(T * L^2) = T * L^2 = O(T * L^2)
 
 ### Population constructor()
 
