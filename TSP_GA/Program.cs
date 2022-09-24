@@ -43,6 +43,7 @@ namespace TSP_GA
                     Console.WriteLine("Genetic Algorithm (multiple threads)\n");
                     return new GeneticAlgorithm(10, 500, 5, false);
                 case '3':
+                    // TODO:
                     Console.WriteLine("Benchmarking\n");
                     return new GeneticAlgorithm(10, 500, 5);
                 default:
