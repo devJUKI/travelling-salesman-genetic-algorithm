@@ -6,13 +6,15 @@
         public float X { get; set; }
         public float Y { get; set; }
 
-        public Location(string name, float x, float y) {
+        public Location(string name, float x, float y)
+        {
             Name = name;
             X = x;
             Y = y;
         }
 
-        public Location(string line) {
+        public Location(string line)
+        {
             string[] content = line.Split('\t');
             Name = content[0];
             X = float.Parse(content[2]);

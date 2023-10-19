@@ -1,5 +1,4 @@
 ﻿using TSP_GA.Entities;
-using TSP_GA.Interfaces;
 
 namespace TSP_GA
 {
@@ -8,28 +7,26 @@ namespace TSP_GA
         private const string DATA_PATH = "data.txt";
         private const string RESULTS_FILE = "output.txt";
 
-        public static List<Location> Places = new();
+        private static List<Location> places = new();
 
         private static void Main() {
-            Places = IOUtilities.ReadData(DATA_PATH);
+            places = IOUtilities.ReadData(DATA_PATH);
 
-            IJob option = ExecuteDialog();
-            if (option is IGenetic genetic) {
-                genetic.OnBestSolutionChanged += OnBestSolutionChanged;
-                genetic.OnHundredthGeneration += OnHundredthGeneration;
-                genetic.OnJobDone += OnJobDone;
-            }
+            var algorithm = ExecuteDialog();
 
-            option.Start();
+            algorithm.OnBestSolutionChanged += OnBestSolutionChanged;
+            algorithm.OnHundredthGeneration += OnHundredthGeneration;
+            algorithm.OnJobDone += OnJobDone;
+
+            algorithm.Start();
         }
 
-        private static IJob ExecuteDialog() {
+        private static GeneticAlgorithm ExecuteDialog() {
             Console.Clear();
             Console.WriteLine("Travelling Salesman Problem (with Genetic Algorithm)");
             Console.WriteLine("\nWhat do you want to execute?:");
             Console.WriteLine("1. Genetic Algorithm (single thread)");
-            Console.WriteLine("2. Genetic Algorithm (multiple threads)");
-            Console.WriteLine("3. Benchmarking\n");
+            Console.WriteLine("2. Genetic Algorithm (multiple threads)\n");
             char pick = Console.ReadKey().KeyChar;
             Console.Clear();
 
@@ -41,11 +38,7 @@ namespace TSP_GA
                     return new GeneticAlgorithm(10, 500, 5);
                 case '2':
                     Console.WriteLine("Genetic Algorithm (multiple threads)\n");
-                    return new GeneticAlgorithm(10, 500, 5, false);
-                case '3':
-                    // TODO:
-                    Console.WriteLine("Benchmarking\n");
-                    return new GeneticAlgorithm(10, 500, 5);
+                    return new GeneticAlgorithm(10, 500, 5, true);
                 default:
                     return ExecuteDialog();
             }

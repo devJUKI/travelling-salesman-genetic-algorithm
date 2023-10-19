@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\JUKI\\.nuget\\packages\\": {}
+    "C:\\Users\\mrk3r\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\JUKI\\source\\repos\\TSP_GA\\TSP_GA\\TSP_GA.csproj",
+      "projectUniqueName": "C:\\Programs\\GitHub Repositories\\travelling-salesman-genetic-algorithm\\TSP_GA\\TSP_GA.csproj",
       "projectName": "TSP_GA",
-      "projectPath": "C:\\Users\\JUKI\\source\\repos\\TSP_GA\\TSP_GA\\TSP_GA.csproj",
-      "packagesPath": "C:\\Users\\JUKI\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\JUKI\\source\\repos\\TSP_GA\\TSP_GA\\obj\\",
+      "projectPath": "C:\\Programs\\GitHub Repositories\\travelling-salesman-genetic-algorithm\\TSP_GA\\TSP_GA.csproj",
+      "packagesPath": "C:\\Users\\mrk3r\\.nuget\\packages\\",
+      "outputPath": "C:\\Programs\\GitHub Repositories\\travelling-salesman-genetic-algorithm\\TSP_GA\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\JUKI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mrk3r\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -51,7 +51,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -60,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }
