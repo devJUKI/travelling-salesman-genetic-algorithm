@@ -1,8 +1,8 @@
-﻿using TSP_GA.DTOs;
-using TSP_GA.Entities;
-using TSP_GA.Utilities;
+﻿using TSP_GA.Old.DTOs;
+using TSP_GA.Old.Entities;
+using TSP_GA.Old.Utilities;
 
-namespace TSP_GA
+namespace TSP_GA.Old
 {
     public class GeneticAlgorithm
     {
@@ -73,23 +73,23 @@ namespace TSP_GA
 
         private Generation GetInitialGeneration()
         {
-            Generation generation = new();
+            Generation generation = new Generation(new());
 
-            for (int i = 0; i < @params.GenerationSize; i++)
-            {
-                Population random = Population.GenerateRandom(@params.TravellerCount, @params.Locations.Count);
-                generation.AddPopulation(random);
-            }
+            //for (int i = 0; i < @params.GenerationSize; i++)
+            //{
+            //    Population random = Population.GenerateRandom(@params.TravellerCount, @params.Locations.Count);
+            //    generation.AddPopulation(random);
+            //}
 
-            generation.NormalizeFitnesses();
-            bestPopulation = generation.Populations[0];
+            //generation.NormalizeFitnesses();
+            //bestPopulation = generation.Populations[0];
 
             return generation;
         }
 
         private Generation GetNextGeneration(Generation currGeneration)
         {
-            Generation nextGen = new();
+            Generation nextGen = new(new());
             Population A = currGeneration.GetRandomPopulation();
             Population B = currGeneration.GetRandomPopulation();
             for (int j = 0; j < currGeneration.Populations.Count; j++)

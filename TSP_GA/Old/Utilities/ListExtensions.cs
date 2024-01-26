@@ -1,4 +1,4 @@
-﻿namespace TSP_GA.Utilities
+﻿namespace TSP_GA.Old.Utilities
 {
     public static class ListExtensions
     {

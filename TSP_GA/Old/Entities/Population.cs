@@ -1,6 +1,6 @@
-﻿using TSP_GA.Utilities;
+﻿using TSP_GA.Old.Utilities;
 
-namespace TSP_GA.Entities
+namespace TSP_GA.Old.Entities
 {
     public class Population
     {
@@ -73,11 +73,11 @@ namespace TSP_GA.Entities
             double distance = 0;
             for (int i = 0; i < order.Count - 1; i++)
             {
-                Location place1 = Program.places[order[i]];
-                Location place2 = Program.places[order[i + 1]];
+                New.Location place1 = Program.places[order[i]];
+                New.Location place2 = Program.places[order[i + 1]];
                 // Convert to km
-                double xDiff = (place1.X - place2.X) / 1000;
-                double yDiff = (place1.Y - place2.Y) / 1000;
+                double xDiff = (place1.Coordinates.Latitude - place2.Coordinates.Longitude) / 1000;
+                double yDiff = (place1.Coordinates.Latitude - place2.Coordinates.Longitude) / 1000;
                 distance += Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2));
             }
 
